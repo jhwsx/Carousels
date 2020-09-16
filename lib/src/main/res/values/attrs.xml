@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Carousels">
+        <!--图片的缩放类型-->
+        <attr name="carousels_imageScaleType">
+            <!--  Scale using the image matrix when drawing. See
+                             {@link android.widget.ImageView#setImageMatrix(Matrix)}.  -->
+            <enum name="matrix" value="0"/>
+            <!--  Scale the image using {@link android.graphics.Matrix.ScaleToFit#FILL}.  -->
+            <enum name="fitXY" value="1"/>
+            <!--  Scale the image using {@link android.graphics.Matrix.ScaleToFit#START}.  -->
+            <enum name="fitStart" value="2"/>
+            <!--  Scale the image using {@link android.graphics.Matrix.ScaleToFit#CENTER}.  -->
+            <enum name="fitCenter" value="3"/>
+            <!--  Scale the image using {@link android.graphics.Matrix.ScaleToFit#END}.  -->
+            <enum name="fitEnd" value="4"/>
+            <!--  Center the image in the view, but perform no scaling.  -->
+            <enum name="center" value="5"/>
+            <!--  Scale the image uniformly (maintain the image's aspect ratio) so both dimensions
+                             (width and height) of the image will be equal to or larger than the corresponding
+                             dimension of the view (minus padding). The image is then centered in the view.  -->
+            <enum name="centerCrop" value="6"/>
+            <!--  Scale the image uniformly (maintain the image's aspect ratio) so that both
+                             dimensions (width and height) of the image will be equal to or less than the
+                             corresponding dimension of the view (minus padding). The image is then centered in
+                             the view.  -->
+            <enum name="centerInside" value="7"/>
+        </attr>
+        <!--是否自动播放-->
+        <attr name="carousels_autoPlay" format="boolean" />
+        <!--Scroller 的滑动时长，单位是毫秒-->
+        <attr name="carousels_scrollDuration" format="integer" />
+        <!--循环模式-->
+        <attr name="carousels_loopMode">
+            <!--重新开始-->
+            <enum name="restart" value="0" />
+            <!--反向开始-->
+            <enum name="reverse" value="1" />
+        </attr>
+        <!--轮播方向-->
+        <attr name="carousels_orientation">
+            <!--  Defines an horizontal widget.  -->
+            <enum name="horizontal" value="0"/>
+            <!--  Defines a vertical widget.  -->
+            <enum name="vertical" value="1"/>
+        </attr>
+        <!--轮播延时时间，单位是毫秒-->
+        <attr name="carousels_delayTime" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="ViewPagerIndicator">
+        <!-- Style of the circle indicator. -->
+        <attr name="vpiCirclePageIndicatorStyle" format="reference"/>
+        <!-- Style of the icon indicator's views. -->
+        <attr name="vpiIconPageIndicatorStyle" format="reference"/>
+        <!-- Style of the line indicator. -->
+        <attr name="vpiLinePageIndicatorStyle" format="reference"/>
+        <!-- Style of the title indicator. -->
+        <attr name="vpiTitlePageIndicatorStyle" format="reference"/>
+        <!-- Style of the tab indicator's tabs. -->
+        <attr name="vpiTabPageIndicatorStyle" format="reference"/>
+        <!-- Style of the underline indicator. -->
+        <attr name="vpiUnderlinePageIndicatorStyle" format="reference"/>
+    </declare-styleable>
+
+<!--    <attr name="centered" format="boolean" />-->
+    <attr name="selectedColor" format="color" />
+    <attr name="strokeWidth" format="dimension" />
+    <attr name="unselectedColor" format="color" />
+
+    <declare-styleable name="CirclePageIndicator">
+        <!-- Whether or not the indicators should be centered. -->
+<!--        <attr name="centered" />-->
+        <!-- Color of the filled circle that represents the current page. -->
+        <attr name="fillColor" format="color" />
+        <!-- Color of the filled circles that represents pages. -->
+        <attr name="pageColor" format="color" />
+        <!-- Orientation of the indicator. -->
+        <attr name="android:orientation"/>
+        <!-- Radius of the circles. This is also the spacing between circles. -->
+        <attr name="radius" format="dimension" />
+        <!-- Color of the open circles. -->
+        <attr name="strokeColor" format="color" />
+        <!-- Width of the stroke used to draw the circles. -->
+        <attr name="strokeWidth" />
+        <!-- View background -->
+        <attr name="android:background"/>
+    </declare-styleable>
+
+    <declare-styleable name="LinePageIndicator">
+        <!--选中页的颜色-->
+        <attr name="selectedColor" />
+        <!--为选中页的颜色-->
+        <attr name="unselectedColor" />
+        <attr name="android:orientation" />
+        <!--线的长度-->
+        <attr name="lineLength" format="dimension" />
+        <!--线的间隔-->
+        <attr name="lineGap" format="dimension" />
+        <!--线宽-->
+        <attr name="strokeWidth" />
+        <!--是否是圆形的线头-->
+        <attr name="lineRoundCap" format="boolean" />
+        <!-- View background -->
+        <attr name="android:background"/>
+    </declare-styleable>
+
+    <declare-styleable name="NumberPageIndicator">
+        <!--总页数文本颜色-->
+        <attr name="totalPageTextColor" format="color" />
+        <!--页数文本大小-->
+        <attr name="pageTextSize" format="dimension" />
+        <!--当前页文本颜色-->
+        <attr name="currPageTextColor" format="color" />
+        <!--背景颜色-->
+        <attr name="backgroundColor" format="color" />
+        <!--分隔符颜色-->
+        <attr name="separatorColor" format="color" />
+        <!--分隔符，如 /，-，或者.-->
+        <attr name="separator" format="string" />
+    </declare-styleable>
+</resources>

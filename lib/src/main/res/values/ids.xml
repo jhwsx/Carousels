@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="carousels_view_pager" type="id" />
+    <item name="carousels_indicator" type="id" />
+</resources>
