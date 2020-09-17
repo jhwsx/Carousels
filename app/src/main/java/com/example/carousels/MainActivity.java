@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carousels.databinding.MainActivityBinding;
+import com.example.carousels.java.MainJavaActivity;
 
 /**
  * @author wangzhichao

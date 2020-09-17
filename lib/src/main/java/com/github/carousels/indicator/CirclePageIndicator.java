@@ -6,16 +6,10 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewParent;
 
-import com.github.carousels.Carousels;
 import com.github.carousels.R;
-import com.github.carousels.viewpager.ViewPager;
-import com.github.carousels.viewpager.ViewPagerContainer;
 
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 import static android.widget.LinearLayout.HORIZONTAL;
@@ -26,18 +20,13 @@ import static android.widget.LinearLayout.VERTICAL;
  * others are only stroked.
  * 绘制指示点（一个 View 对应一个指示点）。当前 View 的位置的指示点是填充的，其他位置的指示点是描边的。
  */
-public class CirclePageIndicator extends View implements PageIndicator {
+public class CirclePageIndicator extends BasePageIndicator {
 
     private float radius;
     private final Paint paintPageFill = new Paint(ANTI_ALIAS_FLAG);
     private final Paint paintStroke = new Paint(ANTI_ALIAS_FLAG);
     private final Paint paintFill = new Paint(ANTI_ALIAS_FLAG);
-    private ViewPagerContainer viewPager;
-    private int currentPage;
-    private float pageOffset;
-    private int scrollState;
     private int orientation;
-    private int pageCount;
     public CirclePageIndicator(Context context) {
         this(context, null);
     }
@@ -152,11 +141,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-        if (!canDraw()) {
-            return;
-        }
-
+        if (cannotDraw()) return;
         int count = pageCount;
         if (currentPage >= count) {
             setCurrentItem(count - 1);
@@ -220,76 +205,6 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
         canvas.drawCircle(dX, dY, realRadius, paintFill);
     }
-
-    @Override
-    public void setViewPager(ViewPagerContainer view) {
-        if (viewPager == view) {
-            return;
-        }
-//        if (mViewPager != null) {
-//            mViewPager.setOnPageChangeListener(null);
-//        }
-        if (view.getAdapter() == null) {
-            throw new IllegalStateException("ViewPager does not have adapter instance.");
-        }
-        viewPager = view;
-        ViewParent parent = ((View) viewPager).getParent();
-        if (parent instanceof Carousels) {
-            ((Carousels) parent).addOnPageChangeListener(this);
-        }
-//        mViewPager.addOnPageChangeListener(this);
-        invalidate();
-    }
-
-    @Override
-    public void setViewPager(ViewPagerContainer view, int initialPosition) {
-        setViewPager(view);
-        setCurrentItem(initialPosition);
-    }
-
-    @Override
-    public void setCurrentItem(int item) {
-        if (viewPager == null) {
-            throw new IllegalStateException("ViewPager has not been bound.");
-        }
-        viewPager.setCurrentItem(item);
-        currentPage = item;
-        invalidate();
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        invalidate();
-    }
-
-    // ------------- 来自 ViewPager 的 OnPageChangeListener 的监听回调 start ------------
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        scrollState = state;
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        currentPage = position;
-        // positionOffset 的取值范围是 0 到 1.
-        pageOffset = positionOffset;
-        if (currentPage == pageCount - 1) {
-            pageOffset = 0f;
-            if (positionOffset >= 0.5f) {
-                currentPage = 0;
-            }
-        }
-        invalidate();
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        if (scrollState == ViewPager.SCROLL_STATE_IDLE) {
-            currentPage = position;
-            invalidate();
-        }
-    }
-    // ------------- 来自 ViewPager 的 OnPageChangeListener 的监听回调 end   ------------
 
     //--------------- 测量过程 start --------------------
     /*
@@ -380,57 +295,6 @@ public class CirclePageIndicator extends View implements PageIndicator {
         savedState.currentPage = currentPage;
         return savedState;
     }
-
-    @Override
-    public void setPageCount(int pageCount) {
-        this.pageCount = pageCount;
-    }
-
-    static class SavedState extends BaseSavedState {
-        int currentPage;
-
-        public SavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        private SavedState(Parcel in) {
-            super(in);
-            currentPage = in.readInt();
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            super.writeToParcel(dest, flags);
-            dest.writeInt(currentPage);
-        }
-
-        @SuppressWarnings("UnusedDeclaration")
-        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
-            @Override
-            public SavedState createFromParcel(Parcel in) {
-                return new SavedState(in);
-            }
-
-            @Override
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
-    }
     // ---------------- 状态保存与恢复 end  ----------------------
 
-    /**
-     * 是否满足绘制条件
-     * @return true，表示可以绘制；反之，表示不可以。
-     */
-    private boolean canDraw() {
-        if (viewPager == null) {
-            return false;
-        }
-        if (viewPager.getAdapter() == null) {
-            return false;
-        }
-        final int count = pageCount;
-        return count != 0;
-    }
 }

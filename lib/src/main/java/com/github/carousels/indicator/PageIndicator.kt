@@ -40,7 +40,5 @@ interface PageIndicator : ViewPager.OnPageChangeListener {
      */
     fun notifyDataSetChanged()
 
-    fun setOrientation(orientation: Int)
-
     fun setPageCount(pageCount: Int)
 }

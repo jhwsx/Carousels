@@ -36,7 +36,7 @@ class CarouselsPagerAdapter(private val list: List<View>) : PagerAdapter() {
 //        mlp.topMargin = 8
 //        mlp.leftMargin = 8
 //        mlp.rightMargin = 8
-//        container.addView(view, mlp)
+        container.addView(view)
         return view
     }
 

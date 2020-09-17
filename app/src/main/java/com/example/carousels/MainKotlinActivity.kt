@@ -23,9 +23,9 @@ class MainKotlinActivity : AppCompatActivity() {
         val adView = LayoutInflater.from(this).inflate(R.layout.ad_layout, null)
 
         binding.carousels.pageList(arrayListOf(
-            Page(R.drawable.b1),
-            Page(R.drawable.b2),
-            Page(R.drawable.b3),
+            Page(R.drawable.img_1),
+            Page(R.drawable.img_2),
+            Page(R.drawable.img_3),
             Page(adView, Type.TYPE_VIEW),
         ))
             .imageLoader(GlideImageLoader())

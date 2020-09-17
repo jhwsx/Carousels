@@ -51,16 +51,11 @@
     <declare-styleable name="ViewPagerIndicator">
         <!-- Style of the circle indicator. -->
         <attr name="vpiCirclePageIndicatorStyle" format="reference"/>
-        <!-- Style of the icon indicator's views. -->
-        <attr name="vpiIconPageIndicatorStyle" format="reference"/>
         <!-- Style of the line indicator. -->
         <attr name="vpiLinePageIndicatorStyle" format="reference"/>
-        <!-- Style of the title indicator. -->
-        <attr name="vpiTitlePageIndicatorStyle" format="reference"/>
-        <!-- Style of the tab indicator's tabs. -->
-        <attr name="vpiTabPageIndicatorStyle" format="reference"/>
-        <!-- Style of the underline indicator. -->
-        <attr name="vpiUnderlinePageIndicatorStyle" format="reference"/>
+        <!-- Style of the number indicator. -->
+        <attr name="vpiNumberPageIndicatorStyle" format="reference"/>
+
     </declare-styleable>
 
 <!--    <attr name="centered" format="boolean" />-->
@@ -106,17 +101,13 @@
     </declare-styleable>
 
     <declare-styleable name="NumberPageIndicator">
-        <!--总页数文本颜色-->
-        <attr name="totalPageTextColor" format="color" />
         <!--页数文本大小-->
         <attr name="pageTextSize" format="dimension" />
         <!--当前页文本颜色-->
-        <attr name="currPageTextColor" format="color" />
-        <!--背景颜色-->
-        <attr name="backgroundColor" format="color" />
-        <!--分隔符颜色-->
-        <attr name="separatorColor" format="color" />
+        <attr name="pageTextColor" format="color" />
         <!--分隔符，如 /，-，或者.-->
         <attr name="separator" format="string" />
+        <!-- View background -->
+        <attr name="android:background"/>
     </declare-styleable>
 </resources>

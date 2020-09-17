@@ -6,22 +6,15 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewParent;
 
 import androidx.annotation.ColorInt;
 import androidx.core.content.ContextCompat;
 
-import com.github.carousels.Carousels;
 import com.github.carousels.R;
-import com.github.carousels.viewpager.ViewPager;
-import com.github.carousels.viewpager.ViewPagerContainer;
 
-import org.jetbrains.annotations.Nullable;
 
 import static android.widget.LinearLayout.HORIZONTAL;
 import static android.widget.LinearLayout.VERTICAL;
@@ -32,24 +25,22 @@ import static android.widget.LinearLayout.VERTICAL;
  * @author wangzhichao
  * @date 20-9-11
  */
-public class LinePageIndicator extends View implements PageIndicator {
+public class LinePageIndicator extends BasePageIndicator {
 
-    private int scrollState;
-    private float pageOffset;
     private static final String TAG = "LinePageIndicator";
-    public LinePageIndicator(Context context) {
-        this(context, null);
-    }
 
     private Paint paintSelected = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint paintUnselected = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private ViewPagerContainer viewPager;
     private int orientation;
     private float lineLength;
     private float lineGap;
     private float strokeWidth;
-    private int currentPage;
-    private int pageCount;
+
+    public LinePageIndicator(Context context) {
+        this(context, null);
+    }
+
+
     public LinePageIndicator(Context context, @androidx.annotation.Nullable AttributeSet attrs) {
         this(context, attrs, R.attr.vpiLinePageIndicatorStyle);
     }
@@ -65,7 +56,7 @@ public class LinePageIndicator extends View implements PageIndicator {
         float defaultLineLength = resources.getDimension(R.dimen.default_line_indicator_line_width);
         float defaultStrokeWidth = resources.getDimension(R.dimen.default_line_indicator_stroke_width);
         int defaultOrientation = resources.getInteger(R.integer.default_line_indicator_orientation);
-        boolean defaultLineRoundCap = resources.getBoolean(R.bool.defalut_line_indicator_line_roung_cap);
+        boolean defaultLineRoundCap = resources.getBoolean(R.bool.defalut_line_indicator_line_round_cap);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LinePageIndicator, defStyleAttr, 0);
         orientation = a.getInt(R.styleable.LinePageIndicator_android_orientation, defaultOrientation);
@@ -135,11 +126,10 @@ public class LinePageIndicator extends View implements PageIndicator {
     }
     // ---------------- 测量过程 end   ----------------
 
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (!canDraw())  return;
+        if (cannotDraw())  return;
         int count = pageCount;
         if (currentPage >= count) {
             setCurrentItem(count - 1);
@@ -194,9 +184,6 @@ public class LinePageIndicator extends View implements PageIndicator {
         float currStopY;
         if (orientation == HORIZONTAL) {
             currStartX = longOffset + currentPage * lineLengthAndGap;
-//            if (paintSelected.getStrokeCap() != Paint.Cap.BUTT) {
-//                currStartX += strokeWidth / 2f;
-//            }
             currStartX += pageOffset * lineLengthAndGap;
             currStartY = shortOffset;
             currStopX = currStartX + realLineLength;
@@ -204,83 +191,11 @@ public class LinePageIndicator extends View implements PageIndicator {
         } else {
             currStartX = shortOffset;
             currStartY = longOffset + currentPage * lineLengthAndGap;
-//            if (paintSelected.getStrokeCap() != Paint.Cap.BUTT) {
-//                currStartY += strokeWidth / 2f;
-//            }
             currStartY += pageOffset * lineLengthAndGap;
             currStopX = currStartX;
             currStopY = currStartY + realLineLength;
         }
         canvas.drawLine(currStartX, currStartY, currStopX, currStopY, paintSelected);
-    }
-
-    @Override
-    public void setViewPager(@Nullable ViewPagerContainer view) {
-        if (viewPager == view) {
-            return;
-        }
-//        if (viewPager != null) {
-//            viewPager.setOnPageChangeListener(null);
-//        }
-        if (view.getAdapter() == null) {
-            throw new IllegalStateException("ViewPager does not have adapter instance.");
-        }
-        viewPager = view;
-        ViewParent parent = ((View) viewPager).getParent();
-        if (parent instanceof Carousels) {
-            ((Carousels) parent).addOnPageChangeListener(this);
-        }
-        invalidate();
-    }
-
-    @Override
-    public void setViewPager(@Nullable ViewPagerContainer view, int initialPosition) {
-        setViewPager(view);
-        setCurrentItem(initialPosition);
-    }
-
-    @Override
-    public void setCurrentItem(int item) {
-        if (viewPager == null) {
-            throw new IllegalStateException("ViewPager has not been bound.");
-        }
-        viewPager.setCurrentItem(item);
-        currentPage = item;
-        invalidate();
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        invalidate();
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        Log.d(TAG, "onPageScrolled: position="+position+",positionOffset="+positionOffset + ",positionOffsetPixels="+positionOffsetPixels);
-        currentPage = position;
-        pageOffset = positionOffset;
-        if (currentPage == pageCount - 1) {
-            pageOffset = 0f;
-            if (positionOffset >= 0.5f) {
-                currentPage = 0;
-            }
-        }
-        invalidate();
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        Log.d(TAG, "onPageSelected: position="+position+",scrollState="+scrollState);
-        if (scrollState == ViewPager.SCROLL_STATE_IDLE) {
-            currentPage = position;
-            invalidate();
-        }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        Log.d(TAG, "onPageScrollStateChanged: state="+state);
-        scrollState = state;
     }
 
     // ---------------- 状态保存与恢复 start ----------------------
@@ -298,43 +213,6 @@ public class LinePageIndicator extends View implements PageIndicator {
         SavedState savedState = new SavedState(superState);
         savedState.currentPage = currentPage;
         return savedState;
-    }
-
-    @Override
-    public void setPageCount(int pageCount) {
-        this.pageCount = pageCount;
-    }
-
-    static class SavedState extends BaseSavedState {
-        int currentPage;
-
-        public SavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        private SavedState(Parcel in) {
-            super(in);
-            currentPage = in.readInt();
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            super.writeToParcel(dest, flags);
-            dest.writeInt(currentPage);
-        }
-
-        @SuppressWarnings("UnusedDeclaration")
-        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
-            @Override
-            public SavedState createFromParcel(Parcel in) {
-                return new SavedState(in);
-            }
-
-            @Override
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
     }
     // ---------------- 状态保存与恢复 end  ----------------------
     public int getOrientation() {
@@ -396,19 +274,4 @@ public class LinePageIndicator extends View implements PageIndicator {
     public @ColorInt int getUnselectedColor() {
         return paintUnselected.getColor();
     }
-    /**
-     * 是否满足绘制条件
-     * @return true，表示可以绘制；反之，表示不可以。
-     */
-    private boolean canDraw() {
-        if (viewPager == null) {
-            return false;
-        }
-        if (viewPager.getAdapter() == null) {
-            return false;
-        }
-        final int count = pageCount;
-        return count != 0;
-    }
-
 }

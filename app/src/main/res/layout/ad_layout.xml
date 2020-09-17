@@ -7,8 +7,8 @@
 
     <TextView
         android:id="@+id/tv"
-        android:text="A"
-        style="@style/TextAppearance.AppCompat.Large"
+        android:text="这是一个广告布局。"
+        style="@style/TextAppearance.MaterialComponents.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

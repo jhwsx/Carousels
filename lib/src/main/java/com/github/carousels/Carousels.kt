@@ -26,7 +26,7 @@ import java.util.*
  */
 class Carousels @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : CardView(context, attrs, defStyleAttr), ViewPager.OnPageChangeListener {
+) : FrameLayout(context, attrs, defStyleAttr), ViewPager.OnPageChangeListener {
     private var scaleType: ImageView.ScaleType = ImageView.ScaleType.FIT_CENTER
     private val handler = WeakHandler()
     private var viewPagerContainer: ViewPagerContainer
@@ -71,7 +71,6 @@ class Carousels @JvmOverloads constructor(
         delayTime = ta.getInt(R.styleable.Carousels_carousels_delayTime, DEFAULT_DELAY_TIME.toInt())
             .toLong()
         ta.recycle()
-        elevation = 0f
         setupViewPagerScroller()
     }
 
@@ -330,8 +329,8 @@ class Carousels @JvmOverloads constructor(
         viewPagerContainer.setPageTransformer(reverseDrawingOrder, transformer)
     }
 
-    fun cornerRadius(radius: Float) = apply {
-        this.radius = radius
+    fun pageMargin(marginPixels: Int) = apply {
+        viewPagerContainer.setPageMargin(marginPixels)
     }
 
     private var mOnPageChangeListeners: MutableList<ViewPager.OnPageChangeListener>? = null
