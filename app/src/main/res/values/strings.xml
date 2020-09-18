@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Carousels</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_horizontal">Horizontal</string>
+    <string name="title_vertical">Vertical</string>
+    <string name="title_ad">Ad</string>
+    <string name="local_image_carousels">本地图片轮播</string>
+    <string name="link_image_carousels">网络图片资源轮播</string>
 </resources>

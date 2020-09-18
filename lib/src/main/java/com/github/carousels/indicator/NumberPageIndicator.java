@@ -83,17 +83,15 @@ public class NumberPageIndicator extends BasePageIndicator {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        long start = System.currentTimeMillis();
         String text = getText();
         float baseline = getHeight() * 0.5f - (fontMetrics.top + fontMetrics.bottom) * 0.5f;
         canvas.drawText(text, getWidth() * 0.5f, baseline, paint);
-        long end = System.currentTimeMillis();
-        Log.d(TAG, "onDraw: cost=" + (end - start));
     }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 //        super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+        // 这里是空实现，因为数字指示器不需要滑动的效果。
     }
 
     @Override

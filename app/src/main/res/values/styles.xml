@@ -11,9 +11,9 @@
     </style>
 
     <style name="CustomCirclePageIndicator">
-        <item name="pageColor">#FF00FF00</item>
-        <item name="fillColor">#FF888888</item>
-        <item name="strokeColor">#FF000000</item>
+        <item name="pageColor">#FF8B9B9F</item>
+        <item name="fillColor">#FFFFFFFF</item>
+        <item name="strokeColor">#FFCCCCCC</item>
         <item name="strokeWidth">1dp</item>
         <item name="radius">4dp</item>
     </style>

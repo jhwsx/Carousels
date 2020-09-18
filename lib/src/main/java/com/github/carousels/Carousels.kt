@@ -6,7 +6,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.cardview.widget.CardView
 import com.github.carousels.bean.Page
 import com.github.carousels.bean.Type
 import com.github.carousels.callback.ImageLoader

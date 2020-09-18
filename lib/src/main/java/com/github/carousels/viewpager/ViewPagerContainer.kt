@@ -8,7 +8,7 @@ import androidx.viewpager.widget.PagerAdapter
  * [ViewPager] 和 [VerticalViewPager] 的统一接口
  *
  * @author wangzhichao
- * @date 20-9-9
+ * @date 2020-9-9
  */
 interface ViewPagerContainer {
     fun setCurrentItem(item: Int, smoothScroll: Boolean)

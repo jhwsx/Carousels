@@ -4,10 +4,10 @@ import android.content.Context
 import android.widget.ImageView
 
 /**
- *
+ * 图片加载接口
  *
  * @author wangzhichao
- * @date 20-9-9
+ * @date 2020-9-9
  */
 interface ImageLoader {
 

@@ -1,10 +1,10 @@
 package com.github.carousels.bean
 
 /**
- *
+ * 类别类
  *
  * @author wangzhichao
- * @date 20-9-9
+ * @date 2020-9-9
  */
 enum class Type {
     /**

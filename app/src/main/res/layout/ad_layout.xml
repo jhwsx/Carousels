@@ -7,8 +7,19 @@
 
     <TextView
         android:id="@+id/tv"
-        android:text="这是一个广告布局。"
+        android:text="这是一个 View 布局。"
         style="@style/TextAppearance.MaterialComponents.Body1"
+        android:textColor="#FFFFFF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/tv2"
+        android:padding="8dp"
+        android:textColor="#FFEB3B"
+        style="@style/TextAppearance.MaterialComponents.Body2"
+        android:text="如果设置 loopMode 为 RESTART，那么不要把 View 对象放在头部或尾部；如果设置 loopMode 为 REVERSE，则没有限制。"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

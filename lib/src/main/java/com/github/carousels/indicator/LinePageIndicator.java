@@ -23,7 +23,7 @@ import static android.widget.LinearLayout.VERTICAL;
  * 线条页面指示器
  *
  * @author wangzhichao
- * @date 20-9-11
+ * @date 2020-9-11
  */
 public class LinePageIndicator extends BasePageIndicator {
 

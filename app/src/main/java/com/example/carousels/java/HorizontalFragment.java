@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.carousels.GlideImageLoader;
 import com.example.carousels.R;
-import com.example.carousels.databinding.HomeFragmentBinding;
+import com.example.carousels.databinding.HorizontalFragmentBinding;
 import com.github.carousels.Carousels;
 import com.github.carousels.CarouselsConstants;
 import com.github.carousels.bean.Page;
@@ -25,21 +25,55 @@ import java.util.List;
  * @author wangzhichao
  * @date 20-9-16
  */
-public class HomeFragment extends Fragment {
+public class HorizontalFragment extends Fragment {
 
-    private HomeFragmentBinding binding;
+    private HorizontalFragmentBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = HomeFragmentBinding.inflate(inflater, container, false);
+        binding = HorizontalFragmentBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setupCarousels1();
+        setupCarousels2();
+    }
+
+    private void setupCarousels2() {
+        ArrayList<Page<?, Type>> pages = new ArrayList<>();
+        pages.add(new Page<Object, Type>("https://wanandroid.com/blogimgs/bfcf57e5-aa5d-4ca3-9ca9-245dcbfd31e9.png", Type.TYPE_IMAGE));
+        pages.add(new Page<Object, Type>("https://www.wanandroid.com/blogimgs/62c1bd68-b5f3-4a3c-a649-7ca8c7dfabe6.png", Type.TYPE_IMAGE));
+        pages.add(new Page<Object, Type>("https://www.wanandroid.com/blogimgs/50c115c2-cf6c-4802-aa7b-a4334de444cd.png", Type.TYPE_IMAGE));
+        pages.add(new Page<Object, Type>("https://www.wanandroid.com/blogimgs/90c6cc12-742e-4c9f-b318-b912f163b8d0.png", Type.TYPE_IMAGE));
+        final List<String> titles = new ArrayList<>();
+        titles.add("【Android开发教程】高级UI：自定义ViewGroup与UI性能优化");
+        titles.add("我们新增了一个常用导航Tab~");
+        titles.add("一起来做个App吧");
+        titles.add("flutter 中文社区");
+        binding.carousels2.pageList(pages)
+                .imageLoader(new GlideImageLoader())
+                .scrollDuration(CarouselsConstants.DEFAULT_SCROLL_DURATION)
+                .pageIndicator(binding.pageIndicator2)
+                .loopMode(Carousels.LoopMode.REVERSE)
+                .startIndex(2)
+                .offscreenPageLimit(3)
+                .addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        super.onPageSelected(position);
+                        binding.title2.setText(titles.get(position));
+                    }
+                })
+                .autoPlay(true)
+                .start();
+    }
+
+    private void setupCarousels1() {
         List<Page<Object, Type>> pages = new ArrayList<>();
         pages.add(new Page<Object, Type>(R.drawable.dragon1, Type.TYPE_IMAGE));
         pages.add(new Page<Object, Type>(R.drawable.dragon2, Type.TYPE_IMAGE));
@@ -74,19 +108,21 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         binding.carousels.startAutoPlay();
+        binding.carousels2.startAutoPlay();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         binding.carousels.stopAutoPlay();
+        binding.carousels2.stopAutoPlay();
     }
 
-    public static HomeFragment newInstance() {
+    public static HorizontalFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        HomeFragment fragment = new HomeFragment();
+        HorizontalFragment fragment = new HorizontalFragment();
         fragment.setArguments(args);
         return fragment;
     }

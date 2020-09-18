@@ -40,5 +40,10 @@ interface PageIndicator : ViewPager.OnPageChangeListener {
      */
     fun notifyDataSetChanged()
 
+    /**
+     * 设置页数
+     * <p>
+     * 注意这是用户看到的页数, 不包括为了实现 RESTART 类型循环添加的额外的页。
+     */
     fun setPageCount(pageCount: Int)
 }

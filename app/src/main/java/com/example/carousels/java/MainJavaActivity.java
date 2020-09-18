@@ -36,9 +36,9 @@ public class MainJavaActivity extends AppCompatActivity {
         binding = MainJavaActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         final List<Fragment> fragments = new ArrayList<>();
-        fragments.add(HomeFragment.newInstance());
-        fragments.add(DashboardFragment.newInstance());
-        fragments.add(NotificationsFragment.newInstance());
+        fragments.add(HorizontalFragment.newInstance());
+        fragments.add(VerticalFragment.newInstance());
+        fragments.add(AdsFragment.newInstance());
         binding.viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             @NonNull
             @Override
@@ -57,13 +57,13 @@ public class MainJavaActivity extends AppCompatActivity {
                 super.onPageSelected(position);
                 switch (position) {
                     case INDEX_HOME:
-                        binding.bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+                        binding.bottomNavigationView.setSelectedItemId(R.id.navigation_horizontal);
                         break;
                     case INDEX_DASHBOARD:
-                        binding.bottomNavigationView.setSelectedItemId(R.id.navigation_dashboard);
+                        binding.bottomNavigationView.setSelectedItemId(R.id.navigation_vertical);
                         break;
                     case INDEX_NOTIFICATIONS:
-                        binding.bottomNavigationView.setSelectedItemId(R.id.navigation_notifications);
+                        binding.bottomNavigationView.setSelectedItemId(R.id.navigation_ad);
                         break;
                 }
             }
@@ -72,13 +72,13 @@ public class MainJavaActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.navigation_home:
+                    case R.id.navigation_horizontal:
                         binding.viewPager.setCurrentItem(INDEX_HOME, false);
                         return true;
-                    case R.id.navigation_dashboard:
+                    case R.id.navigation_vertical:
                         binding.viewPager.setCurrentItem(INDEX_DASHBOARD, false);
                         return true;
-                    case R.id.navigation_notifications:
+                    case R.id.navigation_ad:
                         binding.viewPager.setCurrentItem(INDEX_NOTIFICATIONS, false);
                         return true;
                     default:

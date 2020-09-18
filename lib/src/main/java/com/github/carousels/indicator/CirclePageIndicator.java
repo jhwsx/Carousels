@@ -19,6 +19,9 @@ import static android.widget.LinearLayout.VERTICAL;
  * Draws circles (one for each view). The current view position is filled and
  * others are only stroked.
  * 绘制指示点（一个 View 对应一个指示点）。当前 View 的位置的指示点是填充的，其他位置的指示点是描边的。
+ *
+ * @author wangzhichao
+ * @date 2020-9-11
  */
 public class CirclePageIndicator extends BasePageIndicator {
 

@@ -30,12 +30,6 @@ class CarouselsPagerAdapter(private val list: List<View>) : PagerAdapter() {
         if (parent != null && parent is ViewGroup) {
             parent.removeView(view)
         }
-//        val mlp: ViewGroup.MarginLayoutParams = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-//            ViewGroup.LayoutParams.MATCH_PARENT)
-//        mlp.bottomMargin = 8
-//        mlp.topMargin = 8
-//        mlp.leftMargin = 8
-//        mlp.rightMargin = 8
         container.addView(view)
         return view
     }

@@ -17,6 +17,7 @@ import com.github.carousels.viewpager.ViewPagerContainer;
  * 页面指示器的抽象基类
  *
  * 提供了 {@link PageIndicator} 接口的默认实现
+ *
  * @author wangzhichao
  * @date 2020-9-16
  */
