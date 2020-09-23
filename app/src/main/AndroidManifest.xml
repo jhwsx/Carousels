@@ -10,15 +10,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".java.MainJavaActivity" />
-        <activity android:name=".MainKotlinActivity" />
+        <activity android:name=".activity.NestViewPagerActivity"
+            android:label="@string/nested_in_viewpager_activity_name"/>
+        <activity android:name=".activity.NestViewPager2Activity"
+            android:label="@string/nested_in_viewpager2_activity_name"/>
     </application>
 
 </manifest>

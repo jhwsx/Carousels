@@ -5,20 +5,20 @@
     android:orientation="vertical">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/material_button_java"
+        android:id="@+id/material_button_viewpager"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Java-Project" />
+        android:text="@string/nested_in_viewpager_activity_name" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/material_button_kotlin"
+        android:id="@+id/material_button_viewpager2"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Kotlin-Project" />
+        android:text="@string/nested_in_viewpager2_activity_name" />
 </LinearLayout>

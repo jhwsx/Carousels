@@ -1,14 +1,13 @@
-package com.example.carousels;
+package com.example.carousels.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.carousels.R;
 import com.example.carousels.databinding.MainActivityBinding;
-import com.example.carousels.java.MainJavaActivity;
 
 /**
  * @author wangzhichao
@@ -23,18 +22,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         binding = MainActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.materialButtonJava.setOnClickListener(this);
-        binding.materialButtonKotlin.setOnClickListener(this);
+        binding.materialButtonViewpager.setOnClickListener(this);
+        binding.materialButtonViewpager2.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.material_button_java:
-                MainJavaActivity.start(this);
+            case R.id.material_button_viewpager:
+                NestViewPagerActivity.start(this);
                 break;
-            case R.id.material_button_kotlin:
-                MainKotlinActivity.start(this);
+            case R.id.material_button_viewpager2:
+                NestViewPager2Activity.start(this);
                 break;
             default:
                 break;

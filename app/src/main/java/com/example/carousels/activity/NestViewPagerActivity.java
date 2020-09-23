@@ -1,4 +1,4 @@
-package com.example.carousels.java;
+package com.example.carousels.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +13,10 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.carousels.R;
-import com.example.carousels.databinding.MainJavaActivityBinding;
+import com.example.carousels.databinding.NestViewpagerActivityBinding;
+import com.example.carousels.fragment.AdsFragment;
+import com.example.carousels.fragment.HorizontalFragment;
+import com.example.carousels.fragment.VerticalFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -23,9 +26,9 @@ import java.util.List;
  * @author wangzhichao
  * @date 20-9-16
  */
-public class MainJavaActivity extends AppCompatActivity {
+public class NestViewPagerActivity extends AppCompatActivity {
 
-    private  MainJavaActivityBinding binding;
+    private NestViewpagerActivityBinding binding;
 
     private static final int INDEX_HOME = 0;
     private static final int INDEX_DASHBOARD = 1;
@@ -33,7 +36,7 @@ public class MainJavaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = MainJavaActivityBinding.inflate(getLayoutInflater());
+        binding = NestViewpagerActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         final List<Fragment> fragments = new ArrayList<>();
         fragments.add(HorizontalFragment.newInstance());
@@ -90,7 +93,7 @@ public class MainJavaActivity extends AppCompatActivity {
     }
 
     public static void start(Context context) {
-        Intent starter = new Intent(context, MainJavaActivity.class);
+        Intent starter = new Intent(context, NestViewPagerActivity.class);
         context.startActivity(starter);
     }
 }

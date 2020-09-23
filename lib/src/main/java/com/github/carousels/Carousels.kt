@@ -9,9 +9,11 @@ import android.widget.ImageView
 import com.github.carousels.bean.Page
 import com.github.carousels.bean.Type
 import com.github.carousels.callback.ImageLoader
+import com.github.carousels.callback.OnCarouselsPageClickListener
+import com.github.carousels.callback.OnCarouselsPageLongClickListener
 import com.github.carousels.indicator.PageIndicator
+import com.github.carousels.util.CarouselsLog
 import com.github.carousels.util.WeakHandler
-import com.github.carousels.util.logd
 import com.github.carousels.viewpager.VerticalViewPager
 import com.github.carousels.viewpager.ViewPager
 import com.github.carousels.viewpager.ViewPagerContainer
@@ -41,6 +43,7 @@ class Carousels @JvmOverloads constructor(
     private var imageLoader: ImageLoader? = null
     private var pageIndicator: PageIndicator? = null
     private var startIndex: Int = 0
+
     init {
         val ta = context.obtainStyledAttributes(attrs, R.styleable.Carousels)
         orientation = ta.getInt(R.styleable.Carousels_carousels_orientation, 0)
@@ -109,11 +112,11 @@ class Carousels @JvmOverloads constructor(
                 }
             }
             if (currPageIndex == 1 && loopMode == LoopMode.RESTART) {
-                logd(TAG, "currPageIndex=1")
+                CarouselsLog.d(TAG, "currPageIndex=1")
                 viewPagerContainer.setCurrentItem(currPageIndex, false)
                 handler.post(this)
             } else {
-                logd(TAG, "currPageIndex=$currPageIndex")
+                CarouselsLog.d(TAG, "currPageIndex=$currPageIndex")
                 viewPagerContainer.setCurrentItem(currPageIndex)
                 handler.postDelayed(this, delayTime)
             }
@@ -148,7 +151,7 @@ class Carousels @JvmOverloads constructor(
             }
         }
 
-        val adapter = CarouselsPagerAdapter(viewList)
+        val adapter = CarouselsPagerAdapter(this, viewList)
         viewPagerContainer.addOnPageChangeListener(this)
         viewPagerContainer.setAdapter(adapter)
         when (loopMode) {
@@ -210,7 +213,7 @@ class Carousels @JvmOverloads constructor(
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-        logd(
+        CarouselsLog.d(
             TAG,
             "onPageScrolled, position=$position, positionOffset=$positionOffset, positionOffsetPixels=$positionOffsetPixels"
         )
@@ -221,7 +224,7 @@ class Carousels @JvmOverloads constructor(
                 val listener =
                     mOnPageChangeListeners!![i]
                 listener.onPageScrolled(toRealPosition(position).also {
-                    logd(TAG, "onPageScrolled, realPosition=$it, position=$position")
+                    CarouselsLog.d(TAG, "onPageScrolled, realPosition=$it, position=$position")
                 }, positionOffset, positionOffsetPixels)
                 i++
             }
@@ -242,7 +245,7 @@ class Carousels @JvmOverloads constructor(
                 val listener =
                     mOnPageChangeListeners!![i]
                 listener.onPageSelected(realPosition.also {
-                    logd(TAG, "onPageSelected, realPosition=$it, position=$position")
+                    CarouselsLog.d(TAG, "onPageSelected, realPosition=$it, position=$position")
                 })
                 i++
             }
@@ -250,7 +253,7 @@ class Carousels @JvmOverloads constructor(
     }
 
     override fun onPageScrollStateChanged(state: Int) {
-        logd(TAG, "onPageScrollStateChanged, state=$state")
+        CarouselsLog.d(TAG, "onPageScrollStateChanged, state=$state")
         if (loopMode == LoopMode.RESTART) {
             when (state) {
                 ViewPager.SCROLL_STATE_IDLE -> {
@@ -323,13 +326,29 @@ class Carousels @JvmOverloads constructor(
         viewPagerContainer.setOffscreenPageLimit(limit)
     }
 
-    fun pageTransformer(reverseDrawingOrder: Boolean,
-                        transformer: ViewPager.PageTransformer) = apply {
+    fun pageTransformer(
+        reverseDrawingOrder: Boolean,
+        transformer: ViewPager.PageTransformer
+    ) = apply {
         viewPagerContainer.setPageTransformer(reverseDrawingOrder, transformer)
     }
 
     fun pageMargin(marginPixels: Int) = apply {
         viewPagerContainer.setPageMargin(marginPixels)
+    }
+
+    internal var onCarouselsPageClickListener: OnCarouselsPageClickListener? = null
+        private set
+
+    fun setOnCarouselsPageClickListener(listener: OnCarouselsPageClickListener) = apply {
+        onCarouselsPageClickListener = listener
+    }
+
+    internal var onCarourselsPageLongClickListener: OnCarouselsPageLongClickListener? = null
+        private set
+
+    fun setOnCarouselsPageLongClickListener(listener: OnCarouselsPageLongClickListener) = apply {
+        onCarourselsPageLongClickListener = listener
     }
 
     private var mOnPageChangeListeners: MutableList<ViewPager.OnPageChangeListener>? = null
@@ -362,7 +381,7 @@ class Carousels @JvmOverloads constructor(
         }
     }
 
-    private fun toRealPosition(position: Int): Int {
+    fun toRealPosition(position: Int): Int {
         if (loopMode == LoopMode.RESTART) {
             var result = 0
             if (pageCount != 0) {

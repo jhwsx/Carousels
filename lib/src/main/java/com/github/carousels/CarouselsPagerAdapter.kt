@@ -1,11 +1,12 @@
 @file:JvmName("CarouselsConstants")
+
 package com.github.carousels
 
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
 import androidx.viewpager.widget.PagerAdapter
-import com.github.carousels.util.logd
+import com.github.carousels.util.CarouselsLog
 
 /**
  * 轮播图页面适配器
@@ -13,7 +14,8 @@ import com.github.carousels.util.logd
  * @author wangzhichao
  * @date 2020-9-9
  */
-class CarouselsPagerAdapter(private val list: List<View>) : PagerAdapter() {
+class CarouselsPagerAdapter(private val carousels: Carousels, private val list: List<View>) :
+    PagerAdapter() {
 
     override fun getCount(): Int {
         return list.size
@@ -24,18 +26,33 @@ class CarouselsPagerAdapter(private val list: List<View>) : PagerAdapter() {
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        logd(TAG, "instantiateItem: $position")
+        CarouselsLog.d(TAG, "instantiateItem: $position")
         val view = list[position]
         val parent: ViewParent? = view.parent
         if (parent != null && parent is ViewGroup) {
             parent.removeView(view)
         }
         container.addView(view)
+
+        view.setOnClickListener {
+            carousels.onCarouselsPageClickListener?.onCarouselsPageClicked(
+                carousels.toRealPosition(
+                    position
+                )
+            )
+        }
+        view.setOnLongClickListener {
+            carousels.onCarourselsPageLongClickListener?.onCarouselsPageLongClicked(
+                carousels.toRealPosition(
+                    position
+                )
+            ) ?: false
+        }
         return view
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, obj: Any) {
-        logd(TAG, "destroyItem: $position")
+        CarouselsLog.d(TAG, "destroyItem: $position")
         container.removeView(obj as View)
     }
 

@@ -1,14 +1,18 @@
-package com.example.carousels.java;
+package com.example.carousels.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.carousels.GlideImageLoader;
 import com.example.carousels.R;
 import com.example.carousels.databinding.HorizontalFragmentBinding;
@@ -16,6 +20,8 @@ import com.github.carousels.Carousels;
 import com.github.carousels.CarouselsConstants;
 import com.github.carousels.bean.Page;
 import com.github.carousels.bean.Type;
+import com.github.carousels.callback.OnCarouselsPageClickListener;
+import com.github.carousels.callback.OnCarouselsPageLongClickListener;
 import com.github.carousels.viewpager.ViewPager;
 
 import java.util.ArrayList;
@@ -70,6 +76,19 @@ public class HorizontalFragment extends Fragment {
                     }
                 })
                 .autoPlay(true)
+                .setOnCarouselsPageLongClickListener(new OnCarouselsPageLongClickListener() {
+                    @Override
+                    public boolean onCarouselsPageLongClicked(int position) {
+                        Toast.makeText(getContext(), "long click " + position, Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                })
+                .setOnCarouselsPageClickListener(new OnCarouselsPageClickListener() {
+                    @Override
+                    public void onCarouselsPageClicked(int position) {
+                        Toast.makeText(getContext(), "click " + position, Toast.LENGTH_SHORT).show();
+                    }
+                })
                 .start();
     }
 

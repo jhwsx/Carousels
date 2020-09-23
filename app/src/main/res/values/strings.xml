@@ -5,4 +5,6 @@
     <string name="title_ad">Ad</string>
     <string name="local_image_carousels">本地图片轮播</string>
     <string name="link_image_carousels">网络图片资源轮播</string>
+    <string name="nested_in_viewpager_activity_name">Nested In ViewPager</string>
+    <string name="nested_in_viewpager2_activity_name">Nested In ViewPager2</string>
 </resources>
